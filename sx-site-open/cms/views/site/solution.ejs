@@ -1,0 +1,28 @@
+<%- include('layout') %>
+<section class="pt-28 pb-20 bg-slate-900">
+  <div class="max-w-5xl mx-auto px-6">
+    <a href="/" class="text-blue-400 hover:underline">&larr; Voltar</a>
+    <div class="mt-8 grid lg:grid-cols-2 gap-12 items-start">
+      <div>
+        <h1 class="text-5xl font-bold"><%= solution.title %></h1>
+        <p class="text-2xl text-blue-400 mt-4"><%= solution.subtitle %></p>
+        <p class="text-lg text-slate-300 mt-6"><%= solution.description %></p>
+        <% if (solution.features && solution.features.length) { %>
+        <ul class="mt-8 space-y-4">
+          <% solution.features.forEach(function(f) { %>
+          <li class="flex items-center gap-3 text-slate-300"><span class="text-blue-400 font-bold">&#10003;</span> <%= f %></li>
+          <% }); %>
+        </ul>
+        <% } %>
+        <% if (solution.cta_text && solution.cta_link) { %>
+        <a href="<%= solution.cta_link %>" class="inline-block mt-8 bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-xl font-bold transition"><%= solution.cta_text %></a>
+        <% } %>
+      </div>
+      <div class="bg-slate-800 rounded-2xl p-8">
+        <h3 class="text-xl font-bold mb-4">Quer saber mais?</h3>
+        <p class="text-slate-300 mb-6">Fale com um especialista e descubra como o <%= solution.title %> pode ajudar seu negocio.</p>
+        <a href="/contato" class="block text-center bg-green-600 hover:bg-green-700 px-6 py-3 rounded-xl font-semibold transition">Falar com Especialista</a>
+      </div>
+    </div>
+  </div>
+</section>

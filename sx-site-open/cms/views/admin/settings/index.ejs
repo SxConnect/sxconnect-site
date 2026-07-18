@@ -1,0 +1,10 @@
+<%- include('../layout') %>
+<h1 class="text-3xl font-bold mb-8">Configuracoes</h1>
+<form action="/admin/settings" method="POST" class="space-y-6 max-w-2xl">
+    <div><label class="block text-sm text-slate-400 mb-2">Nome do Site</label><input type="text" name="site_name" value="<%= settings.site_name || 'SxConnect' %>" class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 text-white" /></div>
+    <div><label class="block text-sm text-slate-400 mb-2">Descricao do Site</label><textarea name="site_description" rows="3" class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 text-white"><%= settings.site_description || '' %></textarea></div>
+    <div><label class="block text-sm text-slate-400 mb-2">WhatsApp (com codigo do pais)</label><input type="text" name="contact_whatsapp" value="<%= settings.contact_whatsapp || '5511999999999' %>" class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 text-white" /></div>
+    <div><label class="block text-sm text-slate-400 mb-2">E-mail de Contato</label><input type="text" name="contact_email" value="<%= settings.contact_email || '' %>" class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 text-white" /></div>
+    <div><label class="block text-sm text-slate-400 mb-2">Instagram</label><input type="text" name="contact_instagram" value="<%= settings.contact_instagram || '' %>" class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 text-white" /></div>
+    <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition">Salvar Configuracoes</button>
+</form>

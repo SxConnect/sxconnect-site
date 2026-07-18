@@ -1,0 +1,10 @@
+<%- include('../layout') %>
+<h1 class="text-3xl font-bold mb-8"><%= category ? 'Editar' : 'Nova' %> Categoria</h1>
+<form action="<%= category ? '/admin/categories/' + category.id + '?_method=PUT' : '/admin/categories' %>" method="POST" class="space-y-6 max-w-lg">
+    <div><label class="block text-sm text-slate-400 mb-2">Nome</label><input type="text" name="name" value="<%= category ? category.name : '' %>" required class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 text-white" /></div>
+    <div><label class="block text-sm text-slate-400 mb-2">Slug</label><input type="text" name="slug" value="<%= category ? category.slug : '' %>" class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 text-white" /></div>
+    <div class="flex gap-4">
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition">Salvar</button>
+        <a href="/admin/categories" class="border border-slate-600 px-6 py-3 rounded-lg hover:bg-slate-800 transition">Cancelar</a>
+    </div>
+</form>

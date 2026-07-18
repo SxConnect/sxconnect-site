@@ -1,0 +1,19 @@
+<%- include('../layout') %>
+<div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold">Categorias</h1>
+    <a href="/admin/categories/create" class="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg font-semibold transition">+ Nova Categoria</a>
+</div>
+<% if (categories.length === 0) { %><p class="text-slate-400">Nenhuma categoria.</p><% } %>
+<div class="space-y-3">
+<% categories.forEach(function(c) { %>
+    <div class="card p-4 flex justify-between items-center">
+        <div><strong><%= c.name %></strong><span class="text-sm text-slate-400 ml-4">/<%= c.slug %></span></div>
+        <div class="flex gap-2">
+            <a href="/admin/categories/<%= c.id %>/edit" class="text-blue-400 hover:underline text-sm">Editar</a>
+            <form action="/admin/categories/<%= c.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Excluir?')">
+                <button type="submit" class="text-red-400 hover:underline text-sm">Excluir</button>
+            </form>
+        </div>
+    </div>
+<% }); %>
+</div>

@@ -1,0 +1,34 @@
+<%- include('layout') %>
+<section class="pt-28 pb-20">
+  <div class="max-w-5xl mx-auto px-6">
+    <a href="/blog" class="text-blue-400 hover:underline">&larr; Voltar para o Blog</a>
+    <article class="mt-8">
+      <% if (post.image) { %><img src="<%= post.image %>" alt="<%= post.title %>" class="w-full h-72 object-cover rounded-2xl mb-8"><% } %>
+      <span class="text-blue-400 text-sm"><%= post.category_name || 'Noticias' %></span>
+      <h1 class="text-5xl font-bold mt-2"><%= post.title %></h1>
+      <p class="text-slate-400 mt-2"><%= new Date(post.created_at).toLocaleDateString('pt-BR') %></p>
+      <% if (post.excerpt) { %><p class="text-xl text-slate-300 mt-6"><%= post.excerpt %></p><% } %>
+      <div class="prose max-w-none mt-8"><%- post.content %></div>
+      <% if (post.tags) { %>
+      <div class="mt-8 flex gap-2">
+        <% post.tags.split(',').forEach(function(tag) { %>
+          <span class="bg-slate-800 text-sm px-3 py-1 rounded-full text-slate-300"><%= tag.trim() %></span>
+        <% }); %>
+      </div>
+      <% } %>
+    </article>
+    <div class="mt-16">
+      <h2 class="text-2xl font-bold mb-6">Posts recentes</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        <% recentPosts.forEach(function(p) { %>
+        <a href="/blog/<%= p.slug %>" class="flex gap-4 bg-slate-800 rounded-xl p-4 hover:ring-2 hover:ring-blue-500 transition">
+          <% if (p.image) { %><img src="<%= p.image %>" alt="<%= p.title %>" class="w-16 h-16 rounded-lg object-cover flex-shrink-0"><% } %>
+          <div>
+            <span class="text-blue-400 text-xs"><%= p.category_name || '' %></span>
+            <h3 class="font-semibold"><%= p.title %></h3>
+          </div>
+        </a>
+        <% }); %>
+      </div>
+    </div>
+</section>
