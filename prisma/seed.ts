@@ -39,10 +39,39 @@ async function main() {
     create: { title: "Página inicial", slug: "home", content: "", published: true, showInMenu: false },
   });
 
-  const sectionCount = await prisma.section.count({ where: { pageId: homePage.id } });
-  if (sectionCount === 0) {
+  // Remove seções antigas da página inicial e recria divididas por <section>
+  await prisma.section.deleteMany({ where: { pageId: homePage.id } });
+
+  const parts: { title: string; content: string }[] = [];
+  const sectionRegex = /<section[\s\S]*?<\/section>/gi;
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  while ((match = sectionRegex.exec(landingHtml)) !== null) {
+    if (match.index > lastIndex) {
+      const before = landingHtml.slice(lastIndex, match.index).trim();
+      if (before) parts.push({ title: "Cabeçalho", content: before });
+    }
+    const idMatch = match[0].match(/id="([^"]*)"/);
+    const title = idMatch ? idMatch[1] : "Seção";
+    parts.push({ title, content: match[0] });
+    lastIndex = match.index + match[0].length;
+  }
+  const after = landingHtml.slice(lastIndex).trim();
+  if (after) parts.push({ title: "Rodapé", content: after });
+
+  if (parts.length === 0) {
+    parts.push({ title: "Landing", content: landingHtml });
+  }
+
+  for (let i = 0; i < parts.length; i++) {
     await prisma.section.create({
-      data: { pageId: homePage.id, title: "Landing", content: landingHtml, sectionOrder: 0, visible: true },
+      data: {
+        pageId: homePage.id,
+        title: parts[i].title,
+        content: parts[i].content,
+        sectionOrder: i,
+        visible: true,
+      },
     });
   }
   console.log("Página inicial upserted.");
