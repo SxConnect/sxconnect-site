@@ -1,4 +1,6 @@
 import "dotenv/config";
+import fs from "node:fs";
+import path from "node:path";
 
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
@@ -24,6 +26,19 @@ async function main() {
     create: { email, name, passwordHash, role: "ADMIN" },
   });
   console.log(`Admin upserted: ${email}`);
+
+  let landingHtml = "<h1>SxConnect</h1>";
+  const landingPath = path.join(process.cwd(), "legacy", "index-cms.html");
+  if (fs.existsSync(landingPath)) {
+    landingHtml = fs.readFileSync(landingPath, "utf-8");
+  }
+
+  await prisma.page.upsert({
+    where: { slug: "home" },
+    update: { title: "Página inicial", content: landingHtml, published: true, showInMenu: false },
+    create: { title: "Página inicial", slug: "home", content: landingHtml, published: true, showInMenu: false },
+  });
+  console.log("Página inicial upserted.");
 
   const homeSlug = "sobre";
   const hasPage = await prisma.page.findUnique({ where: { slug: homeSlug } });
