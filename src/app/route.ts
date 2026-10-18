@@ -5,10 +5,17 @@ import { prisma } from "@/lib/prisma";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const page = await prisma.page.findUnique({ where: { slug: "home" } });
+  const page = await prisma.page.findUnique({
+    where: { slug: "home" },
+    include: { sections: { where: { visible: true }, orderBy: { sectionOrder: "asc" } } },
+  });
 
   if (page && page.published) {
-    return new NextResponse(page.content, {
+    const html =
+      page.sections.length > 0
+        ? page.sections.map((s) => s.content).join("\n")
+        : page.content;
+    return new NextResponse(html, {
       status: 200,
       headers: { "Content-Type": "text/html; charset=utf-8" },
     });

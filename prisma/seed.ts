@@ -33,11 +33,18 @@ async function main() {
     landingHtml = fs.readFileSync(landingPath, "utf-8");
   }
 
-  await prisma.page.upsert({
+  const homePage = await prisma.page.upsert({
     where: { slug: "home" },
-    update: { title: "Página inicial", content: landingHtml, published: true, showInMenu: false },
-    create: { title: "Página inicial", slug: "home", content: landingHtml, published: true, showInMenu: false },
+    update: { title: "Página inicial", published: true, showInMenu: false },
+    create: { title: "Página inicial", slug: "home", content: "", published: true, showInMenu: false },
   });
+
+  const sectionCount = await prisma.section.count({ where: { pageId: homePage.id } });
+  if (sectionCount === 0) {
+    await prisma.section.create({
+      data: { pageId: homePage.id, title: "Landing", content: landingHtml, sectionOrder: 0, visible: true },
+    });
+  }
   console.log("Página inicial upserted.");
 
   const homeSlug = "sobre";
