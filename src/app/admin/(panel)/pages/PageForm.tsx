@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import Link from "next/link";
 
 import { savePage } from "@/lib/actions/pages";
+import RichTextEditor from "@/components/RichTextEditor";
 
 type Page = {
   id: string;
@@ -24,10 +25,7 @@ export function PageForm({ page }: { page?: Page }) {
         <label className="mb-1 block text-sm font-medium">Título</label>
         <input name="title" className="input" defaultValue={page?.title ?? ""} required />
       </div>
-      <div>
-        <label className="mb-1 block text-sm font-medium">Conteúdo</label>
-        <textarea name="content" className="input" rows={12} defaultValue={page?.content ?? ""} required />
-      </div>
+      <RichTextEditor name="content" label="Conteúdo" defaultValue={page?.content ?? ""} />
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <input name="published" type="checkbox" id="published" defaultChecked={page?.published ?? true} />

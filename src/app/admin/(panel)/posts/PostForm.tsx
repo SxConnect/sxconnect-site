@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import Link from "next/link";
 
 import { savePost } from "@/lib/actions/posts";
+import RichTextEditor from "@/components/RichTextEditor";
 
 type Post = {
   id: string;
@@ -28,10 +29,7 @@ export function PostForm({ post }: { post?: Post }) {
         <label className="mb-1 block text-sm font-medium">Resumo</label>
         <input name="excerpt" className="input" defaultValue={post?.excerpt ?? ""} />
       </div>
-      <div>
-        <label className="mb-1 block text-sm font-medium">Conteúdo</label>
-        <textarea name="content" className="input" rows={12} defaultValue={post?.content ?? ""} required />
-      </div>
+      <RichTextEditor name="content" label="Conteúdo" defaultValue={post?.content ?? ""} />
       <div>
         <label className="mb-1 block text-sm font-medium">Imagem de capa</label>
         {post?.coverImageId && (
