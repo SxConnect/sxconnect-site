@@ -12,22 +12,19 @@ if (!connectionString) {
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString }) });
 
 async function main() {
-  const email = (process.env.ADMIN_EMAIL || "admin@sxconnect.com.br").toLowerCase();
-  const password = process.env.ADMIN_PASSWORD || "Admin@123";
+  const email = (process.env.ADMIN_EMAIL || "sxconect@gmail.com").toLowerCase();
+  const password = process.env.ADMIN_PASSWORD || "Sx@170805";
   const name = process.env.ADMIN_NAME || "Administrador";
 
-  const existing = await prisma.user.findUnique({ where: { email } });
-  if (!existing) {
-    const passwordHash = await bcrypt.hash(password, 10);
-    await prisma.user.create({
-      data: { email, name, passwordHash, role: "ADMIN" },
-    });
-    console.log(`Admin criado: ${email}`);
-  } else {
-    console.log(`Admin já existe: ${email}`);
-  }
+  const passwordHash = await bcrypt.hash(password, 10);
 
-  // Página inicial de exemplo
+  await prisma.user.upsert({
+    where: { email },
+    update: { name, passwordHash, role: "ADMIN" },
+    create: { email, name, passwordHash, role: "ADMIN" },
+  });
+  console.log(`Admin upserted: ${email}`);
+
   const homeSlug = "sobre";
   const hasPage = await prisma.page.findUnique({ where: { slug: homeSlug } });
   if (!hasPage) {
@@ -43,7 +40,6 @@ async function main() {
     });
   }
 
-  // Post de exemplo
   const postSlug = "bem-vindo-ao-cms";
   const hasPost = await prisma.post.findUnique({ where: { slug: postSlug } });
   if (!hasPost) {

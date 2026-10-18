@@ -103,3 +103,7 @@ export async function destroyCurrentSession(): Promise<void> {
   const cookieStore = await cookies();
   cookieStore.delete(SESSION_COOKIE);
 }
+
+export async function destroyAllUserSessions(userId: string): Promise<void> {
+  await prisma.session.deleteMany({ where: { userId } });
+}
