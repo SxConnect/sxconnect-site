@@ -98,5 +98,25 @@ model Page {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  menuItems MenuItem[]
+
   @@map("pages")
+}
+
+model MenuItem {
+  id        String   @id @default(cuid())
+  label     String
+  url       String?
+  pageId    String?
+  page      Page?    @relation(fields: [pageId], references: [id], onDelete: SetNull)
+  parentId  String?
+  parent    MenuItem? @relation("MenuChildren", fields: [parentId], references: [id], onDelete: Cascade)
+  children  MenuItem[] @relation("MenuChildren")
+  menuOrder Int      @default(0)
+  target    String   @default("_self")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([parentId])
+  @@map("menu_items")
 }

@@ -24,6 +24,9 @@ export default async function AdminPanelLayout({
               <Link href="/admin/pages" className="hover:underline">
                 Páginas
               </Link>
+              <Link href="/admin/menu" className="hover:underline">
+                Menu
+              </Link>
             </nav>
           </div>
           <div className="flex items-center gap-3 text-sm">

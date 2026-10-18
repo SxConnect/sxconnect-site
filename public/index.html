@@ -317,6 +317,50 @@ html{
 
 </footer>
 
+
+<script>
+(async function(){
+  try {
+    const res = await fetch('/api/menu');
+    if (!res.ok) return;
+    const items = await res.json();
+    const nav = document.getElementById('dynamic-nav');
+    if (!nav || !Array.isArray(items)) return;
+    nav.innerHTML = '';
+    items.forEach(item => {
+      const a = document.createElement('a');
+      a.href = item.url || '#';
+      a.textContent = item.label;
+      a.className = 'text-sm text-muted-foreground transition-colors hover:text-foreground';
+      if (item.target === '_blank') a.target = '_blank';
+      if (item.children && item.children.length) {
+        const wrap = document.createElement('div');
+        wrap.className = 'relative group';
+        const btn = document.createElement('button');
+        btn.textContent = item.label + ' ▾';
+        btn.className = 'text-sm text-muted-foreground transition-colors hover:text-foreground';
+        const dd = document.createElement('div');
+        dd.className = 'absolute hidden group-hover:block bg-card border border-border rounded-xl p-2 min-w-40 z-50';
+        item.children.forEach(ch => {
+          const la = document.createElement('a');
+          la.href = ch.url || '#';
+          la.textContent = ch.label;
+          la.className = 'block px-3 py-2 text-sm hover:bg-background rounded';
+          if (ch.target === '_blank') la.target = '_blank';
+          dd.appendChild(la);
+        });
+        wrap.appendChild(btn);
+        wrap.appendChild(dd);
+        nav.appendChild(wrap);
+      } else {
+        nav.appendChild(a);
+      }
+    });
+    nav.classList.remove('hidden');
+  } catch (e) { console.error(e); }
+})();
+</script>
+
 </body>
 </html>
 ```
