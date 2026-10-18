@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SXCONNECT - Transforme seu WhatsApp em uma Máquina de Vendas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #050505;
+      --bg-secondary: #0a0a0a;
+      --bg-card: #111827;
+      --green: #25d366;
+      --green-glow: #00d084;
+      --blue: #0066ff;
+      --blue-end: #00d4ff;
+      --text: #f9fafb;
+      --text-secondary: #9ca3af;
+      --border: #1f2937;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    img { max-width: 100%; }
+
+    /* HEADER */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      background: rgba(5,5,5,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); padding: 16px 0;
+    }
+    .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+    .nav-logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--blue), var(--green)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 18px; color: #fff; }
+    .nav-logo-text { font-weight: 800; font-size: 20px; letter-spacing: 1px; }
+    .nav-logo-tagline { font-size: 11px; color: var(--text-secondary); letter-spacing: 0.5px; }
+    .nav-menu { display: flex; gap: 28px; list-style: none; }
+    .nav-menu a { color: var(--text-secondary); text-decoration: none; font-weight: 500; font-size: 14px; transition: color 0.2s; }
+    .nav-menu a:hover { color: var(--text); }
+    .nav-ctas { display: flex; gap: 12px; }
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; text-decoration: none; cursor: pointer; border: none; }
+    .btn-whatsapp { background: var(--green); color: #000; }
+    .btn-primary { background: linear-gradient(90deg, var(--blue), var(--blue-end)); color: #fff; }
+    .btn-black { background: #111; color: #fff; border: 1px solid var(--border); }
+
+    /* HERO */
+    .hero { padding: 140px 0 80px; position: relative; overflow: hidden; }
+    .hero-glow {
+      position: absolute; right: 10%; top: 50%; transform: translateY(-50%);
+      width: 500px; height: 500px; background: radial-gradient(circle, var(--green-glow), transparent 70%);
+      filter: blur(100px); opacity: 0.35; pointer-events: none;
+    }
+    .hero-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(37,211,102,0.1); border: 1px solid rgba(37,211,102,0.3); color: var(--green); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 20px; }
+    .hero h1 { font-size: 52px; font-weight: 900; line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px; }
+    .hero-gradient { background: linear-gradient(90deg, var(--blue), var(--green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero p { color: var(--text-secondary); font-size: 18px; margin-bottom: 28px; max-width: 90%; }
+    .price-box { background: rgba(17,24,39,0.8); border: 1px solid var(--border); border-radius: 12px; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; max-width: 480px; }
+    .price-old { text-align: center; }
+    .price-old-label { font-size: 11px; color: var(--text-secondary); text-decoration: line-through; }
+    .price-new { text-align: center; }
+    .price-new-value { font-size: 30px; font-weight: 900; color: var(--green); }
+    .price-new-label { font-size: 11px; color: var(--text-secondary); }
+    .price-guarantee { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-secondary); }
+    .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-lg { padding: 14px 28px; font-size: 16px; border-radius: 10px; }
+    .hero-image { position: relative; }
+    .hero-mockup { width: 100%; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); border: 1px solid var(--border); }
+
+    /* BENEFÍCIOS */
+    .benefits { padding: 80px 0; background: var(--bg-secondary); }
+    .section-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section-title { font-size: 32px; font-weight: 800; margin-bottom: 40px; text-align: center; }
+    .benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .benefit-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: border-color 0.2s; }
+    .benefit-card:hover { border-color: var(--blue); }
+    .benefit-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(0,102,255,0.1); border: 1px solid rgba(0,102,255,0.3); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; color: var(--blue); font-weight: 800; }
+    .benefit-card h3 { font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
+    .benefit-card p { color: var(--text-secondary); font-size: 13px; }
+
+    /* STATS */
+    .stats { padding: 40px 0; background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; text-align: center; }
+    .stat-item h4 { font-size: 28px; font-weight: 900; color: var(--text); margin-bottom: 4px; }
+    .stat-item p { color: var(--text-secondary); font-size: 13px; }
+
+    /* CTA FINAL */
+    .cta-final { padding: 80px 0; background: var(--bg-secondary); }
+    .cta-box { text-align: center; max-width: 800px; margin: 0 auto; }
+    .cta-box h2 { font-size: 36px; font-weight: 900; margin-bottom: 16px; }
+    .cta-box p { color: var(--text-secondary); margin-bottom: 28px; font-size: 16px; }
+
+    /* FOOTER */
+    footer { padding: 40px 0; text-align: center; color: var(--text-secondary); font-size: 13px; border-top: 1px solid var(--border); }
+
+    @media (max-width: 900px) {
+      .hero-container, .benefits-grid, .stats-grid { grid-template-columns: 1fr; }
+      .nav-menu { display: none; }
+      .hero h1 { font-size: 36px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-icon">SX</div>
+        <div>
+          <div class="nav-logo-text">SXCONNECT</div>
+          <div class="nav-logo-tagline">Tecnologia e Automação</div>
+        </div>
+      </a>
+      <ul class="nav-menu">
+        <li><a href="#inicio">Início</a></li>
+        <li><a href="#solucoes">Soluções</a></li>
+        <li><a href="#como-funciona">Como Funciona</a></li>
+        <li><a href="#depoimentos">Depoimentos</a></li>
+        <li><a href="#planos">Planos</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <div class="nav-ctas">
+        <a href="#" class="btn btn-whatsapp">WhatsApp</a>
+        <a href="#planos" class="btn btn-primary">Agendar Demo</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" id="inicio">
+    <div class="hero-glow"></div>
+    <div class="hero-container">
+      <div>
+        <div class="hero-badge">🚀 OFERTA DE LANÇAMENTO</div>
+        <h1>Transforme seu <span class="hero-gradient">WhatsApp</span> em uma <span class="hero-gradient">poderosa Máquina de Vendas</span></h1>
+        <p>Criamos seu site, organizamos seu Google Meu Negócio e implantamos uma IA que atende clientes, agenda serviços e gera oportunidades automaticamente para você vender mais.</p>
+        <div class="price-box">
+          <div class="price-old"><div class="price-old-label">DE R$497/MÊS</div></div>
+          <div class="price-new"><div class="price-new-value">R$297/MÊS</div><div class="price-new-label">SEM TAXA DE IMPLANTAÇÃO</div></div>
+          <div class="price-guarantee">🛡️ 7 DIAS DE GARANTIA</div>
+        </div>
+        <div class="hero-buttons">
+          <a href="#" class="btn btn-primary btn-lg">QUERO MAIS CLIENTES AGORA</a>
+          <a href="#" class="btn btn-black btn-lg">💬 FALAR NO WHATSAPP</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img class="hero-mockup" src="https://i.imgur.com/8j5Zz7G.png" alt="Interface WhatsApp">
+      </div>
+    </div>
+  </section>
+
+  <section class="benefits" id="solucoes">
+    <div class="section-container">
+      <h2 class="section-title">O que você ganha</h2>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">🌐</div>
+          <h3>Site Profissional</h3>
+          <p>WordPress otimizado para gerar resultados</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">📍</div>
+          <h3>Google Meu Negócio</h3>
+          <p>Perfil otimizado para atrair mais clientes locais</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">🤖</div>
+          <h3>IA no WhatsApp</h3>
+          <p>Atendimento 24h, qualifica, responde e agenda</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">📅</div>
+          <h3>Agendamento Automático</h3>
+          <p>Clientes agendam sozinhos direto do WhatsApp</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">📊</div>
+          <h3>CRM Inteligente</h3>
+          <p>Organize atendimentos, leads e oportunidades</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">📈</div>
+          <h3>Relatórios e Dashboard</h3>
+          <p>Acompanhe resultados e cresça com dados reais</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="section-container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <h4>+5.000</h4>
+          <p>Negócios Impactados</p>
+        </div>
+        <div class="stat-item">
+          <h4>+50</h4>
+          <p>Cidades Atendidas</p>
+        </div>
+        <div class="stat-item">
+          <h4>+1 MILHÃO</h4>
+          <p>Mensagens Processadas</p>
+        </div>
+        <div class="stat-item">
+          <h4>24/7</h4>
+          <p>Atendimento Inteligente</p>
+        </div>
+        <div class="stat-item">
+          <h4>+30%</h4>
+          <p>Mais Agendamentos</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-final">
+    <div class="section-container">
+      <div class="cta-box">
+        <h2>Pronto para transformar seu WhatsApp?</h2>
+        <p>Comece hoje mesmo a gerar mais clientes e agendamentos automáticos.</p>
+        <a href="#" class="btn btn-primary btn-lg">QUERO MAIS CLIENTES AGORA</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="section-container">
+      <p>© 2026 SxConnect. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+</body>
+</html>

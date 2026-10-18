@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SxConnect | Atendimento Inteligente com IA</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+    background:#f5f8fc;
+    color:#222;
+    overflow-x:hidden;
+}
+
+/* ==================
+   CORES DA MARCA
+=================== */
+
+:root{
+    --azul:#0057d9;
+    --azul-escuro:#003b92;
+    --verde:#00c853;
+    --amarelo:#ffca28;
+    --branco:#ffffff;
+    --cinza:#555;
+}
+
+
+/* ==================
+   MENU
+=================== */
+
+header{
+    position:fixed;
+    width:100%;
+    top:0;
+    z-index:999;
+    background:rgba(0,50,120,.92);
+    backdrop-filter:blur(10px);
+    padding:15px 8%;
+}
+
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:white;
+    font-size:28px;
+    font-weight:800;
+}
+
+.logo span{
+    color:var(--amarelo);
+}
+
+.menu a{
+    color:white;
+    margin-left:25px;
+    text-decoration:none;
+    font-weight:500;
+}
+
+
+/* ==================
+ HERO
+=================== */
+.hero {
+    min-height: 100vh;
+    padding: 130px 8% 60px;
+    background: linear-gradient(135deg, var(--azul-escuro), var(--azul));
+    position: relative;
+    overflow: hidden;
+}
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255,202,40,.25), transparent);
+    right: -150px;
+    top: -100px;
+}
+.hero-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    max-width: 750px;
+    margin: 0 auto;        /* centraliza o bloco */
+}
+.badge {
+    display: inline-block;
+    background: rgba(255,255,255,.15);
+    color: var(--amarelo);
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255,255,255,.3);
+}
+.hero h1 {
+    font-size: 54px;
+    line-height: 1.1;
+    color: white;
+    font-weight: 900;
+    margin-bottom: 25px;
+}
+.hero h1 span {
+    color: var(--amarelo);
+}
+.hero p {
+    font-size: 22px;
+    color: #e8f1ff;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+.slogan {
+    background: rgba(255,255,255,.12);
+    padding: 25px;
+    border-left: 5px solid var(--verde);
+    border-radius: 10px;
+    color: white;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 35px 0;
+    text-align: left;      /* slogan fica melhor alinhado à esquerda */
+}
+.btn {
+    display: inline-block;
+    background: linear-gradient(45deg, var(--amarelo), #ff9800);
+    color: #222;
+    padding: 18px 35px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 18px;
+    transition: .3s;
+    box-shadow: 0 10px 25px rgba(0,0,0,.25);
+}
+.btn:hover {
+    transform: translateY(-5px);
+}
+.hero-info {
+    margin-top: 35px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: nowrap;          /* mantém em uma linha */
+    justify-content: center;    /* centraliza as caixas */
+}
+.hero-box {
+    background: rgba(255,255,255,.15);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    white-space: nowrap;        /* impede quebra de texto interno */
+}
+
+
+/* ==================
+SEÇÕES GERAIS
+=================== */
+
+section{
+    padding:80px 8%;
+}
+
+.title{
+    text-align:center;
+    font-size:42px;
+    color:var(--azul);
+    font-weight:900;
+    margin-bottom:20px;
+}
+
+.subtitle{
+    text-align:center;
+    font-size:20px;
+    color:#666;
+    max-width:850px;
+    margin:0 auto 50px;
+}
+
+
+/* ==================
+PROBLEMAS
+=================== */
+
+.problemas{
+    background:white;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:#f8fbff;
+    padding:35px;
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    transition:.3s;
+    border-top:5px solid var(--verde);
+}
+
+.card:hover{
+    transform:translateY(-10px);
+}
+
+.card .icon{
+    font-size:45px;
+    margin-bottom:15px;
+}
+
+.card h3{
+    color:var(--azul);
+    margin-bottom:15px;
+    font-size:22px;
+}
+
+.card p{
+    color:#555;
+    line-height:1.6;
+}
+
+
+/* ==================
+IMPAKT IA
+=================== */
+
+.impakt{
+    background:linear-gradient(135deg, #ffffff, #eef5ff);
+}
+
+.impakt-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(350px,1fr));
+    gap:50px;
+    align-items:center;
+}
+
+.impakt-text h2{
+    font-size:42px;
+    color:var(--azul);
+    margin-bottom:20px;
+    font-weight:900;
+}
+
+.impakt-text p{
+    font-size:18px;
+    line-height:1.8;
+    color:#555;
+    margin-bottom:20px;
+}
+
+.highlight{
+    color:var(--verde);
+    font-weight:800;
+}
+
+.impakt-box{
+    background:linear-gradient(135deg, var(--azul), var(--azul-escuro));
+    color:white;
+    padding:40px;
+    border-radius:25px;
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+}
+
+.impakt-box h3{
+    font-size:28px;
+    margin-bottom:25px;
+    color:var(--amarelo);
+}
+
+.impakt-box ul{
+    list-style:none;
+}
+
+.impakt-box li{
+    padding:12px 0;
+    font-size:18px;
+}
+
+
+/* ==================
+DESAFIO 7 DIAS
+=================== */
+
+.desafio{
+    background:linear-gradient(135deg, var(--azul-escuro), var(--azul));
+    color:white;
+}
+
+.desafio .title{
+    color:white;
+}
+
+.timeline{
+    max-width:900px;
+    margin:50px auto 0;
+}
+
+.day{
+    background:rgba(255,255,255,.12);
+    padding:25px;
+    margin-bottom:18px;
+    border-left:5px solid var(--amarelo);
+    border-radius:12px;
+    backdrop-filter:blur(8px);
+}
+
+.day h3{
+    font-size:22px;
+    margin-bottom:10px;
+    color:var(--amarelo);
+}
+
+.day p{
+    font-size:17px;
+    line-height:1.6;
+}
+
+
+/* ==================
+OFERTA ESPECIAL
+=================== */
+
+.oferta{
+    background:linear-gradient(135deg, var(--amarelo), #ffb300);
+    text-align:center;
+    color:#222;
+}
+
+.oferta-box{
+    max-width:900px;
+    margin:auto;
+    background:white;
+    padding:50px;
+    border-radius:25px;
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+}
+
+.oferta h2{
+    font-size:40px;
+    margin-bottom:20px;
+}
+
+.preco-antigo{
+    text-decoration:line-through;
+    font-size:24px;
+    color:#999;
+}
+
+.preco-zero{
+    font-size:60px;
+    font-weight:900;
+    color:var(--verde);
+}
+
+.vagas{
+    margin-top:25px;
+    font-size:22px;
+    font-weight:700;
+}
+
+.barra-vagas{
+    width:100%;
+    height:18px;
+    background:#ddd;
+    border-radius:50px;
+    overflow:hidden;
+    margin:20px 0;
+}
+
+.barra-preenchida{
+    width:0%;
+    height:100%;
+    background:var(--verde);
+}
+
+
+/* ==================
+PLANOS
+=================== */
+
+.planos{
+    background:#f5f8fc;
+}
+
+.planos-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
+    margin-top:50px;
+}
+
+.plano{
+    background:white;
+    padding:40px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 15px 35px rgba(0,0,0,.1);
+    position:relative;
+    transition:.3s;
+}
+
+.plano:hover{
+    transform:translateY(-15px);
+}
+
+.destaque{
+    border:4px solid var(--verde);
+    transform:scale(1.05);
+}
+
+.selo{
+    position:absolute;
+    top:-15px;
+    left:50%;
+    transform:translateX(-50%);
+    background:var(--verde);
+    color:white;
+    padding:8px 25px;
+    border-radius:30px;
+    font-weight:bold;
+}
+
+.plano h3{
+    font-size:30px;
+    color:var(--azul);
+}
+
+.valor{
+    font-size:48px;
+    font-weight:900;
+    margin:20px 0;
+    color:var(--azul);
+}
+
+.plano ul{
+    list-style:none;
+    text-align:left;
+    line-height:2;
+}
+
+
+/* ==================
+CTA FINAL
+=================== */
+
+.cta-final{
+    background:linear-gradient(135deg, var(--azul), var(--azul-escuro));
+    color:white;
+    text-align:center;
+}
+
+.cta-final h2{
+    font-size:45px;
+    margin-bottom:20px;
+}
+
+.cta-final p{
+    font-size:22px;
+    max-width:800px;
+    margin:0 auto 40px;
+}
+
+.whatsapp{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    background:#25D366;
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:35px;
+    color:white;
+    text-decoration:none;
+    box-shadow:0 10px 25px rgba(0,0,0,.3);
+    z-index:999;
+}
+
+
+/* ==================
+RODAPÉ
+=================== */
+
+footer{
+    background:#001b44;
+    color:white;
+    text-align:center;
+    padding:40px 20px;
+}
+
+footer h3 {
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+
+footer p {
+    margin-bottom: 8px;
+    color: #aac;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <div class="logo">Sx<span>Connect</span></div>
+        <div class="menu">
+            <a href="#desafio">Desafio 7 Dias</a>
+            <a href="#impakt">Impakt AI</a>
+            <a href="#planos">Planos</a>
+        </div>
+    </nav>
+</header>
+
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+
+        <h1>
+            Quantos clientes sua empresa 
+            <span>perdeu esta semana</span> sem saber?
+        </h1>
+
+        <p>
+            Em 7 dias nós vamos mostrar onde sua empresa perde clientes e criar um atendente digital treinado com o DNA do seu negócio para recuperar essas oportunidades.
+        </p>
+
+        <div class="slogan">
+            Você cuida do seu negócio.<br>
+            A SxConnect cuida de trazer, atender e organizar seus clientes.
+        </div>
+
+        <a href="#planos" class="btn">
+            🔥 Quero participar do desafio
+        </a>
+
+        <div class="hero-info">
+            <div class="hero-box">🤖 Impakt AI Personalizada</div>
+            <div class="hero-box">📱 Atendimento pelo WhatsApp</div>
+            <div class="hero-box">📈 CRM e Crescimento</div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- PROBLEMAS -->
+<section class="problemas">
+
+    <h2 class="title">
+        Sua empresa pode estar perdendo dinheiro todos os dias
+    </h2>
+
+    <p class="subtitle">
+        A maioria dos pequenos empreendedores trabalha o dia inteiro, mas muitas oportunidades são perdidas por falta de organização no atendimento.
+    </p>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="icon">📵</div>
+            <h3>Mensagens sem resposta</h3>
+            <p>Seu cliente chamou e você estava ocupado. Quando voltou, ele já tinha encontrado outro fornecedor.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">📋</div>
+            <h3>Orçamentos esquecidos</h3>
+            <p>Clientes interessados deixam de comprar porque ninguém fez o acompanhamento correto.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">⏳</div>
+            <h3>Falta de tempo</h3>
+            <p>Você precisa trabalhar, vender e atender ao mesmo tempo. Sua empresa precisa de um novo assistente.</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- IMPAKT AI -->
+<section class="impakt" id="impakt">
+
+    <h2 class="title">
+        Conheça o ImpaktAI
+    </h2>
+
+    <p class="subtitle">
+        Um atendente digital criado com o DNA da sua empresa.
+        Não é um robô genérico. Ele aprende seu jeito de atender, seus serviços e sua forma de transformar conversas em clientes.
+    </p>
+
+    <div class="impakt-container">
+
+        <div class="impakt-text">
+
+            <h2>
+                Seu novo funcionário digital trabalha 
+                <span class="highlight">24 horas por dia.</span>
+            </h2>
+
+            <p>
+                Ele entende o seu negócio através de uma consultoria completa, onde mapeamos sua empresa, seus clientes e sua estratégia comercial.
+            </p>
+
+            <p>
+                Com mais de 30 anos de experiência em vendas, a metodologia SxConnect une tecnologia, atendimento e relacionamento para criar um novo canal de crescimento para sua empresa.
+            </p>
+
+            <p>
+                O Impakt AI não substitui você.
+                Ele libera seu tempo para que você possa focar naquilo que realmente faz seu negócio crescer.
+            </p>
+
+        </div>
+
+        <div class="impakt-box">
+
+            <h3>🧠 O DNA do seu Impakt AI</h3>
+
+            <ul>
+                <li>✅ Conhece seus serviços e produtos</li>
+                <li>✅ Aprende o tom de voz da sua empresa</li>
+                <li>✅ Responde as principais dúvidas dos clientes</li>
+                <li>✅ Identifica oportunidades de venda</li>
+                <li>✅ Organiza os clientes no CRM</li>
+                <li>✅ Chama você quando necessário</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DESAFIO 7 DIAS -->
+<section class="desafio" id="desafio">
+
+    <h2 class="title">
+        🚀 Desafio Agenda Cheia SxConnect - 7 Dias
+    </h2>
+
+    <p class="subtitle" style="color:#f1f1f1;">
+        Durante 7 dias vamos entrar dentro do seu negócio, descobrir onde você está perdendo oportunidades e implantar um novo processo de atendimento inteligente.
+    </p>
+
+    <div class="timeline">
+
+        <div class="day">
+            <h3>Dia 1 — Descobrindo o DNA da sua empresa</h3>
+            <p>Realizamos um diagnóstico completo do seu negócio, seus clientes, seus diferenciais e sua forma de vender.</p>
+        </div>
+
+        <div class="day">
+            <h3>Dia 2 — Treinamento do Impakt AI</h3>
+            <p>Criamos seu atendente digital personalizado com base nas informações da sua empresa.</p>
+        </div>
+
+        <div class="day">
+            <h3>Dia 3 — Conexão do WhatsApp e CRM</h3>
+            <p>Seu atendimento começa a ser organizado, registrado e acompanhado em uma plataforma profissional.</p>
+        </div>
+
+        <div class="day">
+            <h3>Dia 4 e 5 — Ajustes e evolução</h3>
+            <p>Analisamos conversas reais, ajustamos respostas e melhoramos continuamente o comportamento do seu atendente digital.</p>
+        </div>
+
+        <div class="day">
+            <h3>Dia 6 — Análise de resultados</h3>
+            <p>Você começa a enxergar números, oportunidades e informações que antes estavam perdidas no WhatsApp.</p>
+        </div>
+
+        <div class="day">
+            <h3>Dia 7 — Relatório de crescimento</h3>
+            <p>Apresentamos os resultados da implantação e mostramos como a SxConnect pode continuar ajudando sua empresa a crescer.</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- OFERTA ESPECIAL -->
+<section class="oferta">
+
+    <div class="oferta-box">
+
+        <h2>🎁 Lançamento SxConnect</h2>
+
+        <p>Os 10 primeiros empreendedores selecionados ganham a implantação completa do Impakt AI.</p>
+
+        <p class="preco-antigo">De R$ 990,00</p>
+
+        <div class="preco-zero">R$ 0</div>
+
+        <p>Você recebe a consultoria de 7 dias, treinamento da IA, configuração do atendimento e relatório de crescimento.</p>
+
+        <div class="vagas">Restam apenas 10 vagas nesta fase de lançamento</div>
+
+        <div class="barra-vagas">
+            <div class="barra-preenchida"></div>
+        </div>
+
+        <a href="#planos" class="btn">🚀 Quero minha vaga</a>
+
+    </div>
+
+</section>
+
+
+<!-- PLANOS -->
+<section class="planos" id="planos">
+
+    <h2 class="title">Escolha como continuar crescendo após os 7 dias</h2>
+
+    <div class="planos-grid">
+
+        <div class="plano">
+            <h3>Plano Início</h3>
+            <div class="valor">R$149,90</div>
+            <ul>
+                <li>✔ Atendimento Inteligente</li>
+                <li>✔ WhatsApp conectado</li>
+                <li>✔ Histórico de conversas</li>
+                <li>✔ Relatórios básicos</li>//
+            </ul>
+        </div>
+
+        <div class="plano destaque">
+            <div class="selo">Mais Escolhido</div>
+            <h3>Crescimento</h3>
+            <div class="valor">R$297,00</div>
+            <ul>
+                <li>✔ Tudo do plano Início</li>
+                <li>✔ + Canais: <br>WhatsApp, Instagram, Messenger</li>                
+                <li>✔ Impakt AI personalizado</li>
+                <li>✔ CRM completo</li>
+                <li>✔ Funil de oportunidades</li>
+                <li>✔ Estratégias de recuperação</li>
+                <li>✔ Relatórios de crescimento</li>
+            </ul>
+        </div>
+
+        <div class="plano">
+            <h3>Empreendedor</h3>
+            <div class="valor">R$499,00</div>
+            <ul>
+                <li>✔ Tudo do Crescimento</li>
+                <li>✔ Canais ilimitados: <br>WhatsApp, Instagram, Telegram, Messenger, e mais</li>
+                <li>✔ Automações avançadas</li>
+                <li>✔ Campanhas de retorno</li>
+                <li>✔ Atendimento prioritário</li>
+                <li>✔ Evolução constante da IA</li>
+                <li>✔ App Mobile iOS e Android</li>  
+            </ul>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+
+    <h2>
+        Você cuida do seu negócio.<br>
+        A SxConnect cuida de trazer, atender e organizar seus clientes.
+    </h2>
+
+    <p>
+        Em apenas 7 dias vamos mostrar onde sua empresa perde oportunidades e criar um atendente digital treinado com o DNA do seu negócio.
+    </p>
+
+    <a href="https://wa.me/55021987000079" class="btn">
+        📲 Falar com a SxConnect
+    </a>
+
+</section>
+
+
+<footer>
+    <h3>SxConnect</h3>
+    <p>Tecnologia, Inteligência Artificial e vendas trabalhando juntas para o crescimento da sua empresa.</p>
+    <p>Impakt AI • Atendimento Inteligente • CRM • WhatsApp</p>
+</footer>
+
+
+<a href="https://wa.me/55021987000079" class="whatsapp">💬</a>
+
+
+</body>
+</html>

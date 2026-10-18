@@ -1,0 +1,18 @@
+<%- include('../layout') %>
+<h1 class="text-3xl font-bold mb-8"><%= page ? 'Editar' : 'Nova' %> Pagina</h1>
+<form action="<%= page ? '/admin/pages/' + page.id + '?_method=PUT' : '/admin/pages' %>" method="POST" class="space-y-6 max-w-4xl">
+    <div><label class="block text-sm text-slate-400 mb-2">Titulo</label><input type="text" name="title" value="<%= page ? page.title : '' %>" required class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 text-white" /></div>
+    <div><label class="block text-sm text-slate-400 mb-2">Slug (deixe em branco para gerar automatico)</label><input type="text" name="slug" value="<%= page ? page.slug : '' %>" class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 text-white" /></div>
+    <div><label class="block text-sm text-slate-400 mb-2">Conteudo (HTML)</label><textarea name="content" rows="15" class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 font-mono text-sm focus:outline-none focus:border-blue-500 text-white"><%= page ? page.content : '' %></textarea></div>
+    <div class="grid grid-cols-2 gap-6">
+        <div><label class="block text-sm text-slate-400 mb-2">Ordem no Menu</label><input type="number" name="menu_order" value="<%= page ? page.menu_order : 0 %>" min="0" class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 text-white" /></div>
+        <div class="space-y-4 pt-6">
+            <label class="flex items-center gap-3"><input type="checkbox" name="show_in_menu" value="1" <%= page && page.show_in_menu ? 'checked' : '' %> class="w-5 h-5" /> <span>Mostrar no menu principal</span></label>
+            <label class="flex items-center gap-3"><input type="checkbox" name="published" value="1" <%= !page || page.published ? 'checked' : '' %> class="w-5 h-5" /> <span>Publicado</span></label>
+        </div>
+    </div>
+    <div class="flex gap-4">
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition">Salvar</button>
+        <a href="/admin/pages" class="border border-slate-600 px-6 py-3 rounded-lg hover:bg-slate-800 transition">Cancelar</a>
+    </div>
+</form>

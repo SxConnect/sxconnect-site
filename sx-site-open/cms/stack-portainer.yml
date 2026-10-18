@@ -1,0 +1,15 @@
+{
+  "name": "SxConnect CMS",
+  "stack": "web",
+  "description": "CMS do site institucional SxConnect",
+  "env": [
+    { "name": "DB_HOST", "value": "db" },
+    { "name": "DB_PORT", "value": "3306" },
+    { "name": "DB_USER", "value": "sxconnect" },
+    { "name": "DB_PASSWORD", "value": "sxconnect_secret" },
+    { "name": "DB_NAME", "value": "sxconnect_cms" },
+    { "name": "SESSION_SECRET", "value": "sxconnect_super_secret_key" },
+    { "name": "ADMIN_EMAIL", "value": "admin@sxconnect.com.br" },
+    { "name": "ADMIN_PASSWORD", "value": "Admin@123" }
+  ]
+}

@@ -1,0 +1,41 @@
+<header class="fixed top-0 left-0 w-full z-50 bg-slate-950/90 backdrop-blur-lg border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="/" class="text-2xl font-extrabold text-white no-underline">SX<span class="text-blue-500">CONNECT</span></a>
+        <nav class="hidden md:flex gap-8">
+            <% if (typeof menu !== 'undefined' && menu) { %>
+              <% menu.forEach(function(item) { %>
+                <% if (item.children && item.children.length > 0) { %>
+                  <div class="relative group">
+                    <span class="hover:text-blue-400 cursor-pointer"><%= item.label %></span>
+                    <div class="absolute top-full left-0 pt-2 hidden group-hover:block">
+                      <div class="bg-slate-800 rounded-lg py-2 shadow-xl border border-slate-700">
+                        <% item.children.forEach(function(child) { %>
+                          <a href="<%= child.url %>" class="block px-4 py-2 text-sm hover:bg-slate-700 whitespace-nowrap"><%= child.label %></a>
+                        <% }); %>
+                      </div>
+                    </div>
+                  </div>
+                <% } else { %>
+                  <a href="<%= item.url %>" class="hover:text-blue-400"><%= item.label %></a>
+                <% } %>
+              <% }); %>
+            <% } %>
+        </nav>
+        <a href="/contato" class="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg font-semibold transition flex-shrink-0">Demonstração</a>
+        <button class="md:hidden text-white" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+    </div>
+    <div id="mobile-menu" class="md:hidden hidden px-6 pb-4 bg-slate-950/95 border-t border-slate-800">
+      <% if (typeof menu !== 'undefined' && menu) { %>
+        <% menu.forEach(function(item) { %>
+          <a href="<%= item.url %>" class="block py-2 text-sm hover:text-blue-400"><%= item.label %></a>
+          <% if (item.children) { %>
+            <% item.children.forEach(function(child) { %>
+              <a href="<%= child.url %>" class="block py-1 pl-4 text-sm text-slate-300 hover:text-blue-400"><%= child.label %></a>
+            <% }); %>
+          <% } %>
+        <% }); %>
+      <% } %>
+    </div>
+</header>

@@ -1,0 +1,24 @@
+<%- include('../layout') %>
+<div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold">Seccoes da Home</h1>
+    <a href="/admin/sections/create" class="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg font-semibold transition">+ Nova Secao</a>
+</div>
+<% if (sections.length === 0) { %><p class="text-slate-400">Nenhuma secao cadastrada.</p><% } %>
+<div class="space-y-3">
+<% sections.forEach(function(s) { %>
+    <div class="card p-4 flex justify-between items-center">
+        <div>
+            <span class="text-xs bg-blue-600/20 text-blue-400 px-2 py-1 rounded"><%= typeMap[s.type] || s.type %></span>
+            <strong class="ml-3"><%= s.title || '(sem titulo)' %></strong>
+            <span class="text-sm text-slate-400 ml-3">Ordem: <%= s.section_order %></span>
+            <% if (!s.visible) { %><span class="text-xs bg-yellow-600/20 text-yellow-400 px-2 py-1 rounded ml-2">Oculto</span><% } %>
+        </div>
+        <div class="flex gap-2">
+            <a href="/admin/sections/<%= s.id %>/edit" class="text-blue-400 hover:underline text-sm">Editar</a>
+            <form action="/admin/sections/<%= s.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Excluir?')">
+                <button type="submit" class="text-red-400 hover:underline text-sm">Excluir</button>
+            </form>
+        </div>
+    </div>
+<% }); %>
+</div>

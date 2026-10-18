@@ -1,0 +1,30 @@
+<%- include('../layout') %>
+<div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold">Noticias / Blog</h1>
+    <a href="/admin/posts/create" class="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg font-semibold transition">+ Nova Noticia</a>
+</div>
+<% if (posts.length === 0) { %><p class="text-slate-400">Nenhuma noticia publicada.</p><% } %>
+<div class="space-y-3">
+<% posts.forEach(function(p) { %>
+    <div class="card p-4 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <% if (p.image) { %><img src="<%= p.image %>" alt="" class="w-12 h-12 rounded-lg object-cover" /><% } %>
+            <div>
+                <strong><%= p.title %></strong>
+                <p class="text-sm text-slate-400"><%= p.excerpt ? p.excerpt.substring(0, 80) : '' %></p>
+                <div class="flex gap-2 mt-1">
+                    <% if (p.featured) { %><span class="text-xs bg-blue-600/20 text-blue-400 px-2 py-0.5 rounded">Destaque</span><% } %>
+                    <% if (!p.published) { %><span class="text-xs bg-yellow-600/20 text-yellow-400 px-2 py-0.5 rounded">Rascunho</span><% } %>
+                    <span class="text-xs text-slate-500"><%= p.category_name || 'Sem categoria' %></span>
+                </div>
+            </div>
+        </div>
+        <div class="flex gap-2 flex-shrink-0">
+            <a href="/admin/posts/<%= p.id %>/edit" class="text-blue-400 hover:underline text-sm">Editar</a>
+            <form action="/admin/posts/<%= p.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Excluir?')">
+                <button type="submit" class="text-red-400 hover:underline text-sm">Excluir</button>
+            </form>
+        </div>
+    </div>
+<% }); %>
+</div>

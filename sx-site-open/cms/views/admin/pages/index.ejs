@@ -1,0 +1,24 @@
+<%- include('../layout') %>
+<div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold">Paginas</h1>
+    <a href="/admin/pages/create" class="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg font-semibold transition">+ Nova Pagina</a>
+</div>
+<% if (pages.length === 0) { %><p class="text-slate-400">Nenhuma pagina cadastrada.</p><% } %>
+<div class="space-y-3">
+<% pages.forEach(function(page) { %>
+    <div class="card p-4 flex justify-between items-center">
+        <div>
+            <strong><%= page.title %></strong>
+            <span class="text-sm text-slate-400 ml-4">/<%= page.slug %></span>
+            <% if (page.show_in_menu) { %><span class="text-xs bg-blue-600/20 text-blue-400 px-2 py-1 rounded ml-2">Menu</span><% } %>
+            <% if (!page.published) { %><span class="text-xs bg-yellow-600/20 text-yellow-400 px-2 py-1 rounded ml-2">Rascunho</span><% } %>
+        </div>
+        <div class="flex gap-2">
+            <a href="/admin/pages/<%= page.id %>/edit" class="text-blue-400 hover:underline text-sm">Editar</a>
+            <form action="/admin/pages/<%= page.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Excluir esta pagina?')">
+                <button type="submit" class="text-red-400 hover:underline text-sm">Excluir</button>
+            </form>
+        </div>
+    </div>
+<% }); %>
+</div>

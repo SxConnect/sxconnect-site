@@ -1,0 +1,21 @@
+<%- include('../layout') %>
+<h1 class="text-3xl font-bold mb-8"><%= post ? 'Editar' : 'Nova' %> Noticia</h1>
+<form action="<%= post ? '/admin/posts/' + post.id + '?_method=PUT' : '/admin/posts' %>" method="POST" enctype="multipart/form-data" class="space-y-6 max-w-4xl">
+    <div><label class="block text-sm text-slate-400 mb-2">Titulo</label><input type="text" name="title" value="<%= post ? post.title : '' %>" required class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 text-white" /></div>
+    <div><label class="block text-sm text-slate-400 mb-2">Resumo</label><textarea name="excerpt" rows="3" class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 text-white"><%= post ? post.excerpt : '' %></textarea></div>
+    <div><label class="block text-sm text-slate-400 mb-2">Conteudo (HTML)</label><textarea name="content" rows="15" class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 font-mono text-sm focus:outline-none focus:border-blue-500 text-white"><%= post ? post.content : '' %></textarea></div>
+    <div class="grid grid-cols-2 gap-6">
+        <div><label class="block text-sm text-slate-400 mb-2">Categoria</label><select name="category_id" class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 text-white"><option value="">Sem categoria</option><% categories.forEach(function(c) { %><option value="<%= c.id %>" <%= post && post.category_id == c.id ? 'selected' : '' %>><%= c.name %></option><% }); %></select></div>
+        <div><label class="block text-sm text-slate-400 mb-2">Tags (separadas por virgula)</label><input type="text" name="tags" value="<%= post ? post.tags || '' : '' %>" class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500 text-white" /></div>
+    </div>
+    <% if (post && post.image) { %><div class="flex items-center gap-4"><img src="<%= post.image %>" alt="" class="w-24 h-24 object-cover rounded-lg" /><span class="text-sm text-slate-400">Imagem atual</span></div><% } %>
+    <div><label class="block text-sm text-slate-400 mb-2">Imagem</label><input type="file" name="image" accept="image/*" class="w-full text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-600 file:text-white hover:file:bg-blue-700" /></div>
+    <div class="flex gap-6">
+        <label class="flex items-center gap-3"><input type="checkbox" name="featured" value="1" <%= post && post.featured ? 'checked' : '' %> class="w-5 h-5" /> <span>Em destaque</span></label>
+        <label class="flex items-center gap-3"><input type="checkbox" name="published" value="1" <%= !post || post.published ? 'checked' : '' %> class="w-5 h-5" /> <span>Publicado</span></label>
+    </div>
+    <div class="flex gap-4">
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition">Salvar</button>
+        <a href="/admin/posts" class="border border-slate-600 px-6 py-3 rounded-lg hover:bg-slate-800 transition">Cancelar</a>
+    </div>
+</form>

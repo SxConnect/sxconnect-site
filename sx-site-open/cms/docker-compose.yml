@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  db:
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root_secret
+      MYSQL_DATABASE: sxconnect_cms
+      MYSQL_USER: sxconnect
+      MYSQL_PASSWORD: sxconnect_secret
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: sxconnect
+      DB_PASSWORD: sxconnect_secret
+      DB_NAME: sxconnect_cms
+      SESSION_SECRET: sxconnect_super_secret_key_change_in_production
+      ADMIN_EMAIL: admin@sxconnect.com.br
+      ADMIN_PASSWORD: Admin@123
+    depends_on:
+      - db
+    volumes:
+      - uploads_data:/app/public/uploads
+
+volumes:
+  mysql_data:
+  uploads_data:

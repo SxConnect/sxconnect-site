@@ -1,0 +1,39 @@
+<%- include('../layout') %>
+<h1 class="text-3xl font-bold mb-8">Menu Principal</h1>
+<div class="grid lg:grid-cols-2 gap-8">
+    <div>
+        <h2 class="text-xl font-bold mb-4">Itens do Menu</h2>
+        <% if (items.length === 0) { %><p class="text-slate-400">Nenhum item.</p><% } %>
+        <div class="space-y-2">
+        <% items.forEach(function(item) { %>
+            <div class="card p-4">
+                <div class="flex justify-between items-center">
+                    <div><strong><%= item.label %></strong><span class="text-sm text-slate-400 ml-2"><%= item.url %></span><span class="text-xs text-slate-500 ml-2">Ordem: <%= item.menu_order %></span></div>
+                    <form action="/admin/menus/<%= item.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Excluir?')"><button type="submit" class="text-red-400 hover:underline text-sm">Excluir</button></form>
+                </div>
+                <% if (item.children && item.children.length > 0) { %>
+                <div class="ml-6 mt-2 space-y-1 border-l-2 border-slate-700 pl-4">
+                    <% item.children.forEach(function(child) { %>
+                    <div class="flex justify-between items-center py-1"><span><%= child.label %> <span class="text-xs text-slate-500"><%= child.url %></span></span>
+                    <form action="/admin/menus/<%= child.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Excluir?')"><button type="submit" class="text-red-400 hover:underline text-xs">Excluir</button></form></div>
+                    <% }); %>
+                </div>
+                <% } %>
+            </div>
+        <% }); %>
+        </div>
+    </div>
+    <div>
+        <h2 class="text-xl font-bold mb-4">Adicionar Item</h2>
+        <form action="/admin/menus" method="POST" class="space-y-4 card p-6">
+            <div><label class="block text-sm text-slate-400 mb-1">Rotulo</label><input type="text" name="label" required class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 text-white" /></div>
+            <div><label class="block text-sm text-slate-400 mb-1">URL (se nao usar pagina)</label><input type="text" name="url" placeholder="/exemplo" class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 text-white" /></div>
+            <div><label class="block text-sm text-slate-400 mb-1">Ou vincular a pagina</label><select name="page_id" class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 text-white"><option value="">Nenhuma</option><% pages.forEach(function(p) { %><option value="<%= p.id %>"><%= p.title %> (/<%= p.slug %>)</option><% }); %></select></div>
+            <div class="grid grid-cols-2 gap-4">
+                <div><label class="block text-sm text-slate-400 mb-1">Item pai (para dropdown)</label><select name="parent_id" class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 text-white"><option value="">Nenhum (item primario)</option><% items.forEach(function(i) { %><option value="<%= i.id %>"><%= i.label %></option><% }); %></select></div>
+                <div><label class="block text-sm text-slate-400 mb-1">Ordem</label><input type="number" name="menu_order" value="0" min="0" class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500 text-white" /></div>
+            </div>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg font-semibold transition">Adicionar</button>
+        </form>
+    </div>
+</div>

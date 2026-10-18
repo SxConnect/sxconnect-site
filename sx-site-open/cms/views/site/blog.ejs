@@ -1,0 +1,23 @@
+<%- include('layout') %>
+<section class="pt-28 pb-20">
+  <div class="max-w-7xl mx-auto px-6">
+    <h1 class="text-5xl font-bold mb-16">Blog</h1>
+    <% if (posts.length === 0) { %>
+    <p class="text-slate-400">Nenhum post publicado ainda.</p>
+    <% } else { %>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <% posts.forEach(function(post) { %>
+      <a href="/blog/<%= post.slug %>" class="bg-slate-800 rounded-2xl overflow-hidden hover:ring-2 hover:ring-blue-500 transition group">
+        <% if (post.image) { %><img src="<%= post.image %>" alt="<%= post.title %>" class="w-full h-48 object-cover"><% } %>
+        <div class="p-6">
+          <span class="text-blue-400 text-sm"><%= post.category_name || 'Noticias' %></span>
+          <h2 class="text-xl font-bold mt-2 group-hover:text-blue-400 transition"><%= post.title %></h2>
+          <p class="text-slate-400 mt-3"><%= post.excerpt %></p>
+          <span class="text-blue-400 mt-4 inline-block">Ler mais &rarr;</span>
+        </div>
+      </a>
+      <% }); %>
+    </div>
+    <% } %>
+  </div>
+</section>

@@ -1,0 +1,41 @@
+<%- include('layout') %>
+<h1 class="text-3xl font-bold mb-8">Dashboard</h1>
+<p class="text-slate-400 mb-8">Bem-vindo ao painel do SxConnect CMS.</p>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+    <div class="card p-6">
+        <h3 class="text-sm text-slate-400 uppercase">Paginas</h3>
+        <p class="text-4xl font-bold mt-2"><%= pageCount %></p>
+        <a href="/admin/pages" class="text-blue-400 text-sm mt-4 inline-block hover:underline">Gerenciar &rarr;</a>
+    </div>
+    <div class="card p-6">
+        <h3 class="text-sm text-slate-400 uppercase">Seccoes</h3>
+        <p class="text-4xl font-bold mt-2"><%= sectionCount %></p>
+        <a href="/admin/sections" class="text-blue-400 text-sm mt-4 inline-block hover:underline">Gerenciar &rarr;</a>
+    </div>
+    <div class="card p-6">
+        <h3 class="text-sm text-slate-400 uppercase">Noticias</h3>
+        <p class="text-4xl font-bold mt-2"><%= postCount %></p>
+        <a href="/admin/posts" class="text-blue-400 text-sm mt-4 inline-block hover:underline">Gerenciar &rarr;</a>
+    </div>
+    <div class="card p-6">
+        <h3 class="text-sm text-slate-400 uppercase">Solucoes</h3>
+        <p class="text-4xl font-bold mt-2"><%= solutionCount %></p>
+        <a href="/admin/solutions" class="text-blue-400 text-sm mt-4 inline-block hover:underline">Gerenciar &rarr;</a>
+    </div>
+</div>
+<h2 class="text-xl font-bold mb-4">Ultimas Noticias</h2>
+<% if (recentPosts && recentPosts.length > 0) { %>
+<div class="space-y-3">
+    <% recentPosts.forEach(function(post) { %>
+    <div class="card p-4 flex justify-between items-center">
+        <div>
+            <strong><%= post.title %></strong>
+            <p class="text-sm text-slate-400"><%= post.excerpt ? post.excerpt.substring(0, 60) + '...' : '' %></p>
+        </div>
+        <a href="/admin/posts/<%= post.id %>/edit" class="text-blue-400 text-sm hover:underline">Editar</a>
+    </div>
+    <% }); %>
+</div>
+<% } else { %>
+<p class="text-slate-400">Nenhuma noticia publicada ainda.</p>
+<% } %>

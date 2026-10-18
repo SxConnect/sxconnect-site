@@ -1,0 +1,134 @@
+<%- include('layout') %>
+<% sections.forEach(function(section) { %>
+  <% if (section.type === 'hero') { %>
+    <section class="gradient min-h-screen flex items-center pt-24">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <span class="bg-blue-500/20 text-blue-300 px-4 py-2 rounded-full text-sm">Atendimento Inteligente com IA</span>
+            <h1 class="text-5xl lg:text-7xl font-black leading-tight mt-6"><%= section.title %> <span class="text-blue-400">24 horas por dia</span></h1>
+            <p class="text-xl text-slate-300 mt-8"><%= section.subtitle %></p>
+            <p class="text-lg text-slate-400 mt-4"><%= section.content %></p>
+            <div class="flex flex-wrap gap-4 mt-10">
+              <a href="/solucoes" class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-xl font-bold"><%= section.extra && section.extra.cta_primary ? section.extra.cta_primary : 'Conhecer Solucoes' %></a>
+              <a href="/contato" class="border border-slate-600 px-8 py-4 rounded-xl hover:bg-slate-800"><%= section.extra && section.extra.cta_secondary ? section.extra.cta_secondary : 'Falar com um Especialista' %></a>
+            </div>
+            <% if (section.extra && section.extra.stats) { %>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 text-center">
+              <% section.extra.stats.forEach(function(stat) { %>
+                <div><h3 class="text-3xl font-bold"><%= stat.value %></h3><p class="text-slate-400"><%= stat.label %></p></div>
+              <% }); %>
+            </div>
+            <% } %>
+          </div>
+          <div>
+            <div class="glass rounded-3xl p-8">
+              <h3 class="text-2xl font-bold mb-6">ANA - Assistente Neural Avancada</h3>
+              <div class="space-y-4">
+                <div class="bg-slate-800 p-4 rounded-xl">Ola! Como posso ajudar sua empresa hoje?</div>
+                <div class="bg-blue-600 p-4 rounded-xl ml-10">Quero saber mais sobre automacao.</div>
+                <div class="bg-slate-800 p-4 rounded-xl">Perfeito! Vou identificar sua necessidade e encaminhar para o especialista ideal.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  <% } else if (section.type === 'text') { %>
+    <section class="py-24 <%= section.extra && section.extra.dark ? 'bg-slate-900' : '' %>">
+      <div class="max-w-6xl mx-auto px-6 text-center">
+        <% if (section.title) { %><h2 class="text-5xl font-bold mb-6"><%= section.title %></h2><% } %>
+        <% if (section.subtitle) { %><p class="text-xl text-slate-300 max-w-4xl mx-auto"><%= section.subtitle %></p><% } %>
+        <% if (section.content) { %><div class="prose max-w-4xl mx-auto mt-8"><%= section.content %></div><% } %>
+      </div>
+    </section>
+  <% } else if (section.type === 'news') { %>
+    <section class="py-24 bg-slate-900">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-5xl font-bold text-center mb-16"><%= section.title || 'Blog e Noticias' %></h2>
+        <div class="grid lg:grid-cols-3 gap-8">
+          <% if (typeof featuredPost !== 'undefined' && featuredPost) { %>
+          <div class="lg:col-span-2">
+            <a href="/blog/<%= featuredPost.slug %>" class="block bg-slate-800 rounded-2xl overflow-hidden hover:ring-2 hover:ring-blue-500 transition">
+              <% if (featuredPost.image) { %><img src="<%= featuredPost.image %>" alt="<%= featuredPost.title %>" class="w-full h-64 object-cover"><% } %>
+              <div class="p-8">
+                <span class="text-blue-400 text-sm"><%= featuredPost.category_name || 'Noticias' %></span>
+                <h3 class="text-2xl font-bold mt-2"><%= featuredPost.title %></h3>
+                <p class="text-slate-400 mt-4"><%= featuredPost.excerpt %></p>
+                <span class="text-blue-400 mt-4 inline-block">Ler mais &rarr;</span>
+              </div>
+            </a>
+          </div>
+          <% } %>
+          <div class="space-y-6">
+            <% for(var i = 0; i < Math.min(sidePosts && sidePosts.length || 0, 4); i++) { var post = sidePosts[i]; %>
+            <a href="/blog/<%= post.slug %>" class="flex gap-4 bg-slate-800 rounded-xl p-4 hover:ring-2 hover:ring-blue-500 transition">
+              <% if (post.image) { %><img src="<%= post.image %>" alt="<%= post.title %>" class="w-20 h-20 rounded-lg object-cover flex-shrink-0"><% } %>
+              <div>
+                <span class="text-blue-400 text-xs"><%= post.category_name || 'Noticias' %></span>
+                <h4 class="font-semibold mt-1"><%= post.title %></h4>
+                <p class="text-slate-400 text-sm mt-1"><%= post.excerpt ? post.excerpt.substring(0, 80) + '...' : '' %></p>
+              </div>
+            </a>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </section>
+  <% } else if (section.type === 'cta') { %>
+    <section class="py-24 gradient">
+      <div class="max-w-4xl mx-auto px-6 text-center">
+        <h2 class="text-5xl font-black mb-8"><%= section.title || 'Pronto para transformar seu atendimento?' %></h2>
+        <p class="text-xl mb-10"><%= section.subtitle || 'Descubra como a SxConnect pode automatizar processos e aumentar suas vendas.' %></p>
+        <a href="https://wa.me/5511999999999" class="bg-green-600 hover:bg-green-700 px-10 py-5 rounded-xl text-xl font-bold inline-block transition">Agendar Demonstracao Gratuita</a>
+      </div>
+    </section>
+  <% } else if (section.type === 'cards' || section.type === 'grid') { %>
+    <section class="py-24 <%= section.extra && section.extra.dark ? 'bg-slate-900' : '' %>">
+      <div class="max-w-7xl mx-auto px-6">
+        <% if (section.title) { %><h2 class="text-5xl font-bold text-center mb-16"><%= section.title %></h2><% } %>
+        <% if (section.extra && section.extra.items) { %>
+        <div class="grid md:grid-cols-2 lg:grid-cols-<%= section.extra.items.length > 4 ? 3 : section.extra.items.length > 2 ? 2 : 1 %> gap-8">
+          <% section.extra.items.forEach(function(item) { %>
+          <div class="bg-slate-800 p-8 rounded-2xl hover:ring-2 hover:ring-blue-500 transition">
+            <% if (item.icon) { %><div class="text-4xl mb-4"><%= item.icon %></div><% } %>
+            <h3 class="text-2xl font-bold mb-4"><%= item.title %></h3>
+            <p class="text-slate-300"><%= item.description %></p>
+          </div>
+          <% }); %>
+        </div>
+        <% } else { %>
+        <div class="grid md:grid-cols-2 gap-8">
+          <% solutions.forEach(function(sol) { %>
+          <div class="bg-slate-800 p-8 rounded-2xl">
+            <h3 class="text-2xl font-bold mb-2"><%= sol.title %></h3>
+            <p class="text-slate-300"><%= sol.subtitle %></p>
+          </div>
+          <% }); %>
+        </div>
+        <% } %>
+      </div>
+    </section>
+  <% } else if (section.type === 'plans') { %>
+    <section class="py-24 bg-slate-900">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-5xl font-bold text-center mb-16"><%= section.title || 'Planos' %></h2>
+        <% if (section.extra && section.extra.plans) { %>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <% section.extra.plans.forEach(function(plan) { %>
+          <div class="bg-slate-800 p-8 rounded-2xl <%= plan.featured ? 'ring-2 ring-blue-500 relative' : '' %>">
+            <% if (plan.featured) { %><span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-xs px-4 py-1 rounded-full font-bold">MAIS ESCOLHIDO</span><% } %>
+            <h3 class="text-xl font-bold"><%= plan.name %></h3>
+            <p class="text-3xl font-black mt-4"><%= plan.price %></p>
+            <p class="text-slate-400 text-sm"><%= plan.period || '/mes' %></p>
+            <p class="text-slate-300 mt-4"><%= plan.description %></p>
+            <% if (plan.features) { %><ul class="mt-6 space-y-3"><% plan.features.forEach(function(f) { %><li class="text-sm text-slate-300 flex items-center gap-2">&#10003; <%= f %></li><% }); %></ul><% } %>
+            <a href="/contato" class="block text-center mt-8 bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-xl font-semibold transition">Contratar</a>
+          </div>
+          <% }); %>
+        </div>
+        <% } %>
+      </div>
+    </section>
+  <% } %>
+<% }); %>
